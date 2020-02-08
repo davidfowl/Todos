@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -7,27 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Todos
 {
-    class Program
+    public class TodoApi
     {
-        private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
+        private readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+             PropertyNameCaseInsensitive = true,
+             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        static async Task Main(string[] args)
-        {
-            var app = WebApplication.Create(args);
-
-            app.MapGet("/api/todos", GetAll);
-            app.MapGet("/api/todos/{id}", Get);
-            app.MapPost("/api/todos", Post);
-            app.MapDelete("/api/todos/{id}", Delete);
-
-            await app.RunAsync();
-        }
-
-        static async Task GetAll(HttpContext context)
+        public async Task GetAll(HttpContext context)
         {
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
@@ -36,7 +24,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        static async Task Get(HttpContext context)
+        public async Task Get(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -57,7 +45,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        static async Task Post(HttpContext context)
+        public async Task Post(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
@@ -66,7 +54,7 @@ namespace Todos
             await db.SaveChangesAsync();
         }
 
-        static async Task Delete(HttpContext context)
+        public async Task Delete(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -85,6 +73,14 @@ namespace Todos
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
+        }
+
+        public void MapRoutes(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapGet("/api/todos", GetAll);
+            endpoints.MapGet("/api/todos/{id}", Get);
+            endpoints.MapPost("/api/todos", Post);
+            endpoints.MapDelete("/api/todos/{id}", Delete);
         }
     }
 }
