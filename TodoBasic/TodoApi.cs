@@ -80,7 +80,7 @@ namespace Todos
             endpoints.MapGet("/api/todos", GetAll);
             endpoints.MapGet("/api/todos/{id}", Get);
             endpoints.MapPost("/api/todos", Post);
-            endpoints.MapPost("/api/todos/{id}", Delete);
+            endpoints.MapDelete("/api/todos/{id}", Delete);
         }
     }
 }

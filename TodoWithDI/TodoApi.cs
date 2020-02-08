@@ -78,7 +78,7 @@ namespace Todos
             endpoints.MapGet("/api/todos", WithDbContext(GetAll));
             endpoints.MapGet("/api/todos/{id}", WithDbContext(Get));
             endpoints.MapPost("/api/todos", WithDbContext(Post));
-            endpoints.MapPost("/api/todos/{id}", WithDbContext(Delete));
+            endpoints.MapDelete("/api/todos/{id}", WithDbContext(Delete));
         }
 
         private RequestDelegate WithDbContext(Func<TodoDbContext, HttpContext, Task> handler)
