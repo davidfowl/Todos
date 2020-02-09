@@ -11,17 +11,13 @@ namespace Todos
 {
     public class TodoApi
     {
-        private readonly JsonSerializerOptions _options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
+        private readonly JsonSerializerOptions _options;
         private readonly TodoDbContext _db;
 
-        public TodoApi(TodoDbContext db)
+        public TodoApi(TodoDbContext db, JsonSerializerOptions options)
         {
-            _db = db;
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public async Task GetAll(HttpContext context)
