@@ -64,6 +64,8 @@ namespace Todos
             using var db = new TodoDbContext();
             db.Todos.Add(todo);
             await db.SaveChangesAsync();
+            
+            context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
 
         static async Task Delete(HttpContext context)
@@ -85,6 +87,8 @@ namespace Todos
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
+            
+            context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
     }
 }
