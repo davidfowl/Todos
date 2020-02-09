@@ -1,6 +1,8 @@
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,9 +25,20 @@ namespace Todos
 
             var app = builder.Build();
 
-            TodoApi.MapRoutes(app);
+            TodoApi.MapRoutes(app, Activator);
 
             await app.RunAsync();
         }
+
+        private static RequestDelegate Activator<T>(Func<T, RequestDelegate> handler)
+        {
+            return context =>
+            {
+                var api = context.RequestServices.GetRequiredService<T>();
+                return handler(api)(context);
+            };
+        }
     }
+
+    public delegate RequestDelegate ApiActivator<T>(Func<T, RequestDelegate> inp);
 }
