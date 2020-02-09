@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,12 +14,24 @@ namespace Todos
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
+            builder.Services.AddScoped<TodoApi>();
 
             var app = builder.Build();
 
-            TodoApi.MapRoutes(app);
+            TodoApi.MapRoutes(app, Activator);
 
             await app.RunAsync();
         }
+
+        private static RequestDelegate Activator<T>(Func<T, RequestDelegate> handler)
+        {
+            return context =>
+            {
+                var api = context.RequestServices.GetRequiredService<T>();
+                return handler(api)(context);
+            };
+        }
     }
+
+    public delegate RequestDelegate ApiActivator<T>(Func<T, RequestDelegate> inp);
 }

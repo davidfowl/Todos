@@ -80,22 +80,12 @@ namespace Todos
             await _db.SaveChangesAsync();
         }
 
-        public static void MapRoutes(IEndpointRouteBuilder endpoints)
+        public static void MapRoutes(IEndpointRouteBuilder endpoints, ApiActivator<TodoApi> activator)
         {
-            endpoints.MapGet("/api/todos", WithServices(api => api.GetAll));
-            endpoints.MapGet("/api/todos/{id}", WithServices(api => api.Get));
-            endpoints.MapPost("/api/todos", WithServices(api => api.Post));
-            endpoints.MapDelete("/api/todos/{id}", WithServices(api => api.Delete));
-        }
-
-        private static RequestDelegate WithServices(Func<TodoApi, RequestDelegate> handler)
-        {
-            return context =>
-            {
-                var db = context.RequestServices.GetRequiredService<TodoDbContext>();
-                var api = new TodoApi(db);
-                return handler(api)(context);
-            };
+            endpoints.MapGet("/api/todos", activator(api => api.GetAll));
+            endpoints.MapGet("/api/todos/{id}", activator(api => api.Get));
+            endpoints.MapPost("/api/todos", activator(api => api.Post));
+            endpoints.MapDelete("/api/todos/{id}", activator(api => api.Delete));
         }
     }
 }
