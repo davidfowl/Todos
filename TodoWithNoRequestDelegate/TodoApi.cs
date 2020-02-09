@@ -10,15 +10,18 @@ namespace Todos
 {
     public partial class TodoApi
     {
-        private readonly JsonSerializerOptions _options = new JsonSerializerOptions
+        private readonly JsonSerializerOptions _options;
+        private readonly Service _todoApiService;
+
+        public TodoApi(Service todoApiService, JsonSerializerOptions options)
         {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
+            _todoApiService = todoApiService ?? throw new ArgumentNullException(nameof(todoApiService));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+        }
 
         private async Task GetAll(HttpContext context)
         {
-            var todos = await GetAll();
+            var todos = await _todoApiService.GetAll();
             context.Response.ContentType = "application/json";
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
@@ -32,7 +35,7 @@ namespace Todos
                 return;
             }
 
-            var todo = await Get(todoId);
+            var todo = await _todoApiService.Get(todoId);
             if (todo == null)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -47,7 +50,7 @@ namespace Todos
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
-            await Post(todo);
+            await _todoApiService.Post(todo);
         }
 
         private async Task Delete(HttpContext context)
@@ -59,7 +62,7 @@ namespace Todos
                 return;
             }
 
-            if (!await Delete(todoId))
+            if (!await _todoApiService.Delete(todoId))
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
@@ -78,8 +81,7 @@ namespace Todos
         {
             return context =>
             {
-                var db = context.RequestServices.GetRequiredService<TodoDbContext>();
-                var api = new TodoApi(db);
+                var api = context.RequestServices.GetRequiredService<TodoApi>();
                 return handler(api)(context);
             };
         }

@@ -6,40 +6,43 @@ namespace Todos
 {
     public partial class TodoApi
     {
-        private readonly TodoDbContext _db;
-
-        public TodoApi(TodoDbContext db)
+        public class Service
         {
-            _db = db;
-        }
+            private readonly TodoDbContext _db;
 
-        public async Task<List<Todo>> GetAll()
-        {
-            return await _db.Todos.ToListAsync();
-        }
-
-        public async Task<Todo> Get(long id)
-        {
-            return await _db.Todos.FindAsync(id);
-        }
-
-        public async Task Post(Todo todo)
-        {
-            _db.Todos.Add(todo);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task<bool> Delete(long id)
-        {
-            var todo = await _db.Todos.FindAsync(id);
-            if (todo == null)
+            public Service(TodoDbContext db)
             {
-                return false;
+                _db = db;
             }
 
-            _db.Todos.Remove(todo);
-            await _db.SaveChangesAsync();
-            return true;
+            public async Task<List<Todo>> GetAll()
+            {
+                return await _db.Todos.ToListAsync();
+            }
+
+            public async Task<Todo> Get(long id)
+            {
+                return await _db.Todos.FindAsync(id);
+            }
+
+            public async Task Post(Todo todo)
+            {
+                _db.Todos.Add(todo);
+                await _db.SaveChangesAsync();
+            }
+
+            public async Task<bool> Delete(long id)
+            {
+                var todo = await _db.Todos.FindAsync(id);
+                if (todo == null)
+                {
+                    return false;
+                }
+
+                _db.Todos.Remove(todo);
+                await _db.SaveChangesAsync();
+                return true;
+            }
         }
     }
 }

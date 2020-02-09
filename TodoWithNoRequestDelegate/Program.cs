@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,13 @@ namespace Todos
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
+            builder.Services.AddScoped<TodoApi.Service>();
+            builder.Services.AddScoped<TodoApi>();
+            builder.Services.AddSingleton(new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
 
             var app = builder.Build();
 
