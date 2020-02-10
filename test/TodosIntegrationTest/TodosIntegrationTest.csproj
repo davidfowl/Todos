@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\TodoWithDI\TodoWithDI.csproj" />
     <ProjectReference Include="..\..\TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj" />
     <ProjectReference Include="..\..\TodoWithRoutes\TodoWithRoutes.csproj" />
+    <ProjectReference Include="..\..\TodoWithScopedApi\TodoWithScopedApi.csproj" />
   </ItemGroup>
 
 </Project>

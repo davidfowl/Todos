@@ -1,19 +1,21 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithScopedApi
 {
-    class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
 
             var app = builder.Build();
+            if (args?.Length > 0)
+                app.Listen($"https://localhosts:{args[0]}");
 
             TodoApi.MapRoutes(app);
 
