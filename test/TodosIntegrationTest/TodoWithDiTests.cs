@@ -8,12 +8,12 @@ using Xunit;
 
 namespace TodosIntegrationTest
 {
-    public class TodoWithControllersTests : TestBase, IClassFixture<TestFixture<TodoWithControllers.Program>>
+    public class TodoWithDiTests : TestBase, IClassFixture<TestFixture<TodoWithDi.Program>>
     {
         private const string ApiUrl = "/api/todos";
         private readonly HttpClient _client;
 
-        public TodoWithControllersTests(TestFixture<TodoWithControllers.Program> fixture)
+        public TodoWithDiTests(TestFixture<TodoWithDi.Program> fixture)
         {
             _client = fixture.Client;
         }

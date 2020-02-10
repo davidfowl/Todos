@@ -8,8 +8,7 @@ using Xunit;
 
 namespace TodosIntegrationTest
 {
-    [TestCaseOrderer("TodosIntegrationTest.TestSetup.TestPriorityOrderer", "TodosIntegrationTest")]
-    public class TodosTests : IClassFixture<TestFixture<TodoBasic.Program>>
+    public class TodosTests : TestBase, IClassFixture<TestFixture<TodoBasic.Program>>
     {
         private const string ApiUrl = "/api/todos";
         private readonly HttpClient _client;
