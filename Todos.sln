@@ -1,19 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todos", "TodoBasic\Todos.csproj", "{3F583E94-3C46-4727-A4DE-A4909D4BA094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todos", "TodoBasic\Todos.csproj", "{3F583E94-3C46-4727-A4DE-A4909D4BA094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithDI", "TodoWithDI\TodoWithDI.csproj", "{85653CFF-1A49-407A-8C9D-CF32F8354D36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithDI", "TodoWithDI\TodoWithDI.csproj", "{85653CFF-1A49-407A-8C9D-CF32F8354D36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithScopedApi", "TodoWithScopedApi\TodoWithScopedApi.csproj", "{CC55E7E0-58BF-4458-8E42-7C4DD57BF1ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithScopedApi", "TodoWithScopedApi\TodoWithScopedApi.csproj", "{CC55E7E0-58BF-4458-8E42-7C4DD57BF1ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithNoRequestDelegate", "TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj", "{E59E3EC2-38E4-4268-B92F-903753FD3C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithNoRequestDelegate", "TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj", "{E59E3EC2-38E4-4268-B92F-903753FD3C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithControllers", "TodoWithControllers\TodoWithControllers.csproj", "{277F0126-AA7E-46D6-BDDC-B6B6729644ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllers", "TodoWithControllers\TodoWithControllers.csproj", "{277F0126-AA7E-46D6-BDDC-B6B6729644ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithRoutes", "TodoWithRoutes\TodoWithRoutes.csproj", "{C1261F04-4444-453D-BAF2-34A71F31A5AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes", "TodoWithRoutes\TodoWithRoutes.csproj", "{C1261F04-4444-453D-BAF2-34A71F31A5AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{71485BF7-725B-402C-86B4-F2D575F6562F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodosIntegrationTest", "test\TodosIntegrationTest\TodosIntegrationTest.csproj", "{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3F583E94-3C46-4727-A4DE-A4909D4BA094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,5 +103,32 @@ Global
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x64.Build.0 = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.Build.0 = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|x64.Build.0 = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|x64.ActiveCfg = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|x64.Build.0 = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3F583E94-3C46-4727-A4DE-A4909D4BA094} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{85653CFF-1A49-407A-8C9D-CF32F8354D36} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{CC55E7E0-58BF-4458-8E42-7C4DD57BF1ED} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{E59E3EC2-38E4-4268-B92F-903753FD3C84} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{277F0126-AA7E-46D6-BDDC-B6B6729644ED} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{C1261F04-4444-453D-BAF2-34A71F31A5AD} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{7F842D2E-F683-4CC9-9754-1D1D0FB272C7} = {71485BF7-725B-402C-86B4-F2D575F6562F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E711D6F8-034B-425C-87D8-B2B3D229D7F7}
 	EndGlobalSection
 EndGlobal
