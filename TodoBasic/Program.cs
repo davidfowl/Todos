@@ -1,13 +1,13 @@
-using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoBasic
 {
-    class Program
+    public class Program
     {
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
@@ -15,7 +15,7 @@ namespace Todos
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var app = WebApplication.Create(args);
 
@@ -27,7 +27,7 @@ namespace Todos
             await app.RunAsync();
         }
 
-        static async Task GetAll(HttpContext context)
+        private static async Task GetAll(HttpContext context)
         {
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
@@ -36,7 +36,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        static async Task Get(HttpContext context)
+        private static async Task Get(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -57,18 +57,18 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        static async Task Post(HttpContext context)
+        private static async Task Post(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
             using var db = new TodoDbContext();
             db.Todos.Add(todo);
             await db.SaveChangesAsync();
-            
+
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
 
-        static async Task Delete(HttpContext context)
+        private static async Task Delete(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -87,7 +87,7 @@ namespace Todos
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
-            
+
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
     }
