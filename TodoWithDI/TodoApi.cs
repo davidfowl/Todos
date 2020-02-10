@@ -17,7 +17,7 @@ namespace Todos
              PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        public async Task GetAll(TodoDbContext db, HttpContext context)
+        public async Task GetAllAsync(TodoDbContext db, HttpContext context)
         {
             var todos = await db.Todos.ToListAsync();
 
@@ -25,7 +25,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        public async Task Get(TodoDbContext db, HttpContext context)
+        public async Task GetAsync(TodoDbContext db, HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -45,15 +45,15 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        public async Task Post(TodoDbContext db, HttpContext context)
+        public async Task PostAsync(TodoDbContext db, HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
-            db.Todos.Add(todo);
+            await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
         }
 
-        public async Task Delete(TodoDbContext db, HttpContext context)
+        public async Task DeleteAsync(TodoDbContext db, HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -75,10 +75,10 @@ namespace Todos
 
         public void MapRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/todos", WithDbContext(GetAll));
-            endpoints.MapGet("/api/todos/{id}", WithDbContext(Get));
-            endpoints.MapPost("/api/todos", WithDbContext(Post));
-            endpoints.MapDelete("/api/todos/{id}", WithDbContext(Delete));
+            endpoints.MapGet("/api/todos", WithDbContext(GetAllAsync));
+            endpoints.MapGet("/api/todos/{id}", WithDbContext(GetAsync));
+            endpoints.MapPost("/api/todos", WithDbContext(PostAsync));
+            endpoints.MapDelete("/api/todos/{id}", WithDbContext(DeleteAsync));
         }
 
         private RequestDelegate WithDbContext(Func<TodoDbContext, HttpContext, Task> handler)
