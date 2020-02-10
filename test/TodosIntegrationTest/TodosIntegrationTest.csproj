@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\TodoBasic\Todos.csproj" />
+    <ProjectReference Include="..\..\TodoWithControllers\TodoWithControllers.csproj" />
   </ItemGroup>
 
 </Project>

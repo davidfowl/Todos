@@ -18,6 +18,8 @@ namespace TodoBasic
         private static async Task Main(string[] args)
         {
             var app = WebApplication.Create(args);
+            if (args?.Length > 0)
+                app.Listen($"https://localhosts:{args[0]}");
 
             app.MapGet("/api/todos", GetAll);
             app.MapGet("/api/todos/{id}", Get);

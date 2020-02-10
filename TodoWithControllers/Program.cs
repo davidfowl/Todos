@@ -1,13 +1,13 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithControllers
 {
-    class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,8 @@ namespace Todos
             builder.Services.AddControllers();
 
             var app = builder.Build();
+            if (args?.Length > 0)
+                app.Listen($"https://localhosts:{args[0]}");
 
             app.MapControllers();
 
