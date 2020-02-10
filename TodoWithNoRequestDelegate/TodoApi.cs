@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Text.Json;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithNoRequestDelegate
 {
     public partial class TodoApi
     {

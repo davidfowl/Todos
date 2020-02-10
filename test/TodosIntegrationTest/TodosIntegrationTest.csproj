@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\TodoBasic\Todos.csproj" />
     <ProjectReference Include="..\..\TodoWithControllers\TodoWithControllers.csproj" />
     <ProjectReference Include="..\..\TodoWithDI\TodoWithDI.csproj" />
+    <ProjectReference Include="..\..\TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj" />
   </ItemGroup>
 
 </Project>

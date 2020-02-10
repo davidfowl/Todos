@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoWithNoRequestDelegate
 {
     public partial class TodoApi
     {

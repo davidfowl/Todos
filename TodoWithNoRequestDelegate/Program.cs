@@ -1,13 +1,13 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithNoRequestDelegate
 {
-    class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
