@@ -1,13 +1,15 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithRoutes
 {
-    class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var app = WebApplication.Create(args);
+            if (args?.Length > 0)
+                app.Listen($"https://localhosts:{args[0]}");
 
             var todos = new TodoApi();
             todos.MapRoutes(app);

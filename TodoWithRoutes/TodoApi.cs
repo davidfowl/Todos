@@ -1,18 +1,18 @@
-﻿using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Threading.Tasks;
 
-namespace Todos
+namespace TodoWithRoutes
 {
     public class TodoApi
     {
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
-             PropertyNameCaseInsensitive = true,
-             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
         public async Task GetAll(HttpContext context)

@@ -14,6 +14,8 @@ namespace TodoWithNoRequestDelegate
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
 
             var app = builder.Build();
+            if (args?.Length > 0)
+                app.Listen($"https://localhosts:{args[0]}");
 
             TodoApi.MapRoutes(app);
 
