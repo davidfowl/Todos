@@ -13,23 +13,23 @@ namespace Todos
             _db = db;
         }
 
-        public async Task<List<Todo>> GetAll()
+        public async Task<List<Todo>> GetAllAsync()
         {
             return await _db.Todos.ToListAsync();
         }
 
-        public async Task<Todo> Get(long id)
+        public async Task<Todo> GetAsync(long id)
         {
             return await _db.Todos.FindAsync(id);
         }
 
-        public async Task Post(Todo todo)
+        public async Task PostAsync(Todo todo)
         {
-            _db.Todos.Add(todo);
+            await _db.Todos.AddAsync(todo);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var todo = await _db.Todos.FindAsync(id);
             if (todo == null)

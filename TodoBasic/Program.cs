@@ -19,15 +19,15 @@ namespace Todos
         {
             var app = WebApplication.Create(args);
 
-            app.MapGet("/api/todos", GetAll);
-            app.MapGet("/api/todos/{id}", Get);
-            app.MapPost("/api/todos", Post);
-            app.MapDelete("/api/todos/{id}", Delete);
+            app.MapGet("/api/todos", GetAllAsync);
+            app.MapGet("/api/todos/{id}", GetAsync);
+            app.MapPost("/api/todos", PostAsync);
+            app.MapDelete("/api/todos/{id}", DeleteAsync);
 
             await app.RunAsync();
         }
 
-        static async Task GetAll(HttpContext context)
+        static async Task GetAllAsync(HttpContext context)
         {
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
@@ -36,7 +36,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        static async Task Get(HttpContext context)
+        static async Task GetAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -57,18 +57,18 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        static async Task Post(HttpContext context)
+        static async Task PostAsync(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
             using var db = new TodoDbContext();
-            db.Todos.Add(todo);
+            await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
             
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
 
-        static async Task Delete(HttpContext context)
+        static async Task DeleteAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))

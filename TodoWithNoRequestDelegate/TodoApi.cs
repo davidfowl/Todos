@@ -16,14 +16,14 @@ namespace Todos
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        private async Task GetAll(HttpContext context)
+        private async Task GetAllAsync(HttpContext context)
         {
-            var todos = await GetAll();
+            var todos = await GetAllAsync();
             context.Response.ContentType = "application/json";
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        private async Task Get(HttpContext context)
+        private async Task GetAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -32,7 +32,7 @@ namespace Todos
                 return;
             }
 
-            var todo = await Get(todoId);
+            var todo = await GetAsync(todoId);
             if (todo == null)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -43,14 +43,14 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        private async Task Post(HttpContext context)
+        private async Task PostAsync(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
-            await Post(todo);
+            await PostAsync(todo);
         }
 
-        private async Task Delete(HttpContext context)
+        private async Task DeleteAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -59,7 +59,7 @@ namespace Todos
                 return;
             }
 
-            if (!await Delete(todoId))
+            if (!await DeleteAsync(todoId))
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
@@ -68,10 +68,10 @@ namespace Todos
 
         public static void MapRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/todos", WithServices(api => api.GetAll));
-            endpoints.MapGet("/api/todos/{id}", WithServices(api => api.Get));
-            endpoints.MapPost("/api/todos", WithServices(api => api.Post));
-            endpoints.MapDelete("/api/todos/{id}", WithServices(api => api.Delete));
+            endpoints.MapGet("/api/todos", WithServices(api => api.GetAllAsync));
+            endpoints.MapGet("/api/todos/{id}", WithServices(api => api.GetAsync));
+            endpoints.MapPost("/api/todos", WithServices(api => api.PostAsync));
+            endpoints.MapDelete("/api/todos/{id}", WithServices(api => api.DeleteAsync));
         }
 
         private static RequestDelegate WithServices(Func<TodoApi, RequestDelegate> handler)
