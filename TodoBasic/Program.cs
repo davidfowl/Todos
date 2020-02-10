@@ -1,13 +1,13 @@
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace TodoBasic
+namespace Todos
 {
-    public class Program
+    class Program
     {
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
@@ -15,21 +15,19 @@ namespace TodoBasic
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        private static async Task Main(string[] args)
+        static async Task Main(string[] args)
         {
             var app = WebApplication.Create(args);
-            if (args?.Length > 0)
-                app.Listen($"https://localhosts:{args[0]}");
 
-            app.MapGet("/api/todos", GetAll);
-            app.MapGet("/api/todos/{id}", Get);
-            app.MapPost("/api/todos", Post);
-            app.MapDelete("/api/todos/{id}", Delete);
+            app.MapGet("/api/todos", GetAllAsync);
+            app.MapGet("/api/todos/{id}", GetAsync);
+            app.MapPost("/api/todos", PostAsync);
+            app.MapDelete("/api/todos/{id}", DeleteAsync);
 
             await app.RunAsync();
         }
 
-        private static async Task GetAll(HttpContext context)
+        static async Task GetAllAsync(HttpContext context)
         {
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
@@ -38,7 +36,7 @@ namespace TodoBasic
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        private static async Task Get(HttpContext context)
+        static async Task GetAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -59,18 +57,18 @@ namespace TodoBasic
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        private static async Task Post(HttpContext context)
+        static async Task PostAsync(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
             using var db = new TodoDbContext();
-            db.Todos.Add(todo);
+            await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
-
+            
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
 
-        private static async Task Delete(HttpContext context)
+        static async Task DeleteAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -89,7 +87,7 @@ namespace TodoBasic
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
-
+            
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
     }
