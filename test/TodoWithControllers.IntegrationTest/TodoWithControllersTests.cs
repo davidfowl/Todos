@@ -1,24 +1,25 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Todos;
 using Xunit;
 
-namespace Todos.IntegrationTest
+namespace TodoWithControllers.IntegrationTest
 {
-    public class TodosTests : IClassFixture<TestFixture>
+    public class TodoWithControllersTests : IClassFixture<TestFixture>
     {
         private const string ApiUrl = "/api/todos";
         private readonly HttpClient _client;
 
-        public TodosTests(TestFixture fixture)
+        public TodoWithControllersTests(TestFixture fixture)
         {
             _client = fixture.Client;
         }
 
         [Fact]
-        public async Task Create_Todo_Returns_NoContent()
+        public async Task Create_Todo_Returns_Ok()
         {
             // Arrange
             var todo = new Todo
@@ -32,14 +33,14 @@ namespace Todos.IntegrationTest
             var response = await _client.PostAsync(ApiUrl, content);
 
             // Assert
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
         public async Task Get_Todo_Returns_Ok()
         {
             // Arrange
-            await Create_Todo_Returns_NoContent();
+            await Create_Todo_Returns_Ok();
 
             // Act
             var response = await _client.GetAsync($"{ApiUrl}/1");
@@ -53,8 +54,8 @@ namespace Todos.IntegrationTest
         public async Task Get_All_Todos_Returns_Ok()
         {
             // Arrange
-            await Create_Todo_Returns_NoContent();
-            await Create_Todo_Returns_NoContent();
+            await Create_Todo_Returns_Ok();
+            await Create_Todo_Returns_Ok();
 
             // Act
             var response = await _client.GetAsync(ApiUrl);
@@ -65,16 +66,16 @@ namespace Todos.IntegrationTest
         }
 
         [Fact]
-        public async Task Delete_Todo_Returns_NoContent()
+        public async Task Delete_Todo_Returns_Ok()
         {
             // Arrange
-            await Create_Todo_Returns_NoContent();
+            await Create_Todo_Returns_Ok();
 
             // Act
             var response = await _client.DeleteAsync($"{ApiUrl}/1");
 
             // Assert
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
