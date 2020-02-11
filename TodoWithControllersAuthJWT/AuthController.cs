@@ -19,7 +19,7 @@ namespace TodoWithControllersAuthJWT
         {
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));;
         }
-        [HttpGet(nameof(GenerateToken))]
+        [HttpGet("token")]
         public IActionResult GenerateToken([FromQuery] string username, [FromQuery] string password)
         {
             bool isValidUser = _authService.IsValid(username, password);

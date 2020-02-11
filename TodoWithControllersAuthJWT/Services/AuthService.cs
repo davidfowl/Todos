@@ -28,7 +28,7 @@ namespace Todos
 
         public bool IsValid(string username, string password)
         {
-            return _users.ContainsKey(username) && _users[username].Password.CompareTo(password) == 0;
+            return _users.TryGetValue(username, out var data) && string.Equals(data.Password, password);
         }
     }
 }
