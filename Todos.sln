@@ -15,21 +15,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllers", "Todo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes", "TodoWithRoutes\TodoWithRoutes.csproj", "{C1261F04-4444-453D-BAF2-34A71F31A5AD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllersAuthJWT", "TodoWithControllersAuthJWT\TodoWithControllersAuthJWT.csproj", "{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{71485BF7-725B-402C-86B4-F2D575F6562F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todos.IntegrationTest", "test\Todos.IntegrationTest\Todos.IntegrationTest.csproj", "{F5260B49-0E68-4D03-8616-C255F3B48FC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithControllers.IntegrationTest", "test\TodoWithControllers.IntegrationTest\TodoWithControllers.IntegrationTest.csproj", "{DA058317-F7D1-422B-813D-47B8447A1D5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllers.IntegrationTest", "test\TodoWithControllers.IntegrationTest\TodoWithControllers.IntegrationTest.csproj", "{DA058317-F7D1-422B-813D-47B8447A1D5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithDI.IntegrationTest", "test\TodoWithDI.IntegrationTest\TodoWithDI.IntegrationTest.csproj", "{7B62EAFD-08E9-48DB-B7E7-FFDDA0EB5E25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithDI.IntegrationTest", "test\TodoWithDI.IntegrationTest\TodoWithDI.IntegrationTest.csproj", "{7B62EAFD-08E9-48DB-B7E7-FFDDA0EB5E25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithNoRequestDelegate.IntegrationTest", "test\TodoWithNoRequestDelegate.IntegrationTest\TodoWithNoRequestDelegate.IntegrationTest.csproj", "{4270F693-1130-45F0-A33F-370C6AC68E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithNoRequestDelegate.IntegrationTest", "test\TodoWithNoRequestDelegate.IntegrationTest\TodoWithNoRequestDelegate.IntegrationTest.csproj", "{4270F693-1130-45F0-A33F-370C6AC68E2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithRoutes.IntegrationTest", "test\TodoWithRoutes.IntegrationTest\TodoWithRoutes.IntegrationTest.csproj", "{FE1DABD0-84C6-48C9-84FD-DC00D2EFE8A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes.IntegrationTest", "test\TodoWithRoutes.IntegrationTest\TodoWithRoutes.IntegrationTest.csproj", "{FE1DABD0-84C6-48C9-84FD-DC00D2EFE8A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithScopedApi.IntegrationTest", "test\TodoWithScopedApi.IntegrationTest\TodoWithScopedApi.IntegrationTest.csproj", "{ABDA5B2F-6F27-4247-8A6C-F258C7276C95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithScopedApi.IntegrationTest", "test\TodoWithScopedApi.IntegrationTest\TodoWithScopedApi.IntegrationTest.csproj", "{ABDA5B2F-6F27-4247-8A6C-F258C7276C95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,18 @@ Global
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x64.Build.0 = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x64.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.Build.0 = Release|Any CPU
 		{F5260B49-0E68-4D03-8616-C255F3B48FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5260B49-0E68-4D03-8616-C255F3B48FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5260B49-0E68-4D03-8616-C255F3B48FC6}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -196,6 +210,7 @@ Global
 		{E59E3EC2-38E4-4268-B92F-903753FD3C84} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
 		{277F0126-AA7E-46D6-BDDC-B6B6729644ED} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE} = {66CEA172-CBF6-4CC6-8049-9FEE45E0C72D}
 		{F5260B49-0E68-4D03-8616-C255F3B48FC6} = {71485BF7-725B-402C-86B4-F2D575F6562F}
 		{DA058317-F7D1-422B-813D-47B8447A1D5A} = {71485BF7-725B-402C-86B4-F2D575F6562F}
 		{7B62EAFD-08E9-48DB-B7E7-FFDDA0EB5E25} = {71485BF7-725B-402C-86B4-F2D575F6562F}
