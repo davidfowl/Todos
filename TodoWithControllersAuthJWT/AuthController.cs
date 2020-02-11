@@ -19,6 +19,7 @@ namespace TodoWithControllersAuthJWT
         {
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));;
         }
+
         [HttpGet("token")]
         public IActionResult GenerateToken([FromQuery] string username, [FromQuery] string password)
         {
@@ -27,12 +28,13 @@ namespace TodoWithControllersAuthJWT
             {
                 return BadRequest("invalid user/pass combination");
             }
+
             var claims = _authService.GetUserClaims(username).Select(name => new Claim(name, "true"));
 
-            var key = new SymmetricSecurityKey(_authService.Key);
+            var key = new SymmetricSecurityKey(JwtSettings.Instance.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: _authService.Issuer,
+                issuer: JwtSettings.Instance.Issuer,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds

@@ -47,6 +47,7 @@ namespace Todos
             _db.Todos.Add(todo);
             await _db.SaveChangesAsync();
         }
+
         [HttpDelete("{id}")]
         [Authorize("admin")]
         public async Task<IActionResult> Delete(long id)

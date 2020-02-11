@@ -14,6 +14,7 @@ namespace Todos
 {
     class Program
     {
+
         static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +26,7 @@ namespace Todos
                 options.AddPolicy("admin", policy => policy.RequireClaim("can_delete", "true"));
                 options.AddPolicy("user", policy => policy.RequireClaim("can_view", "true"));
             });
-            var authService = builder.Services.BuildServiceProvider().GetService<IAuthService>();
+
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -36,10 +37,11 @@ namespace Todos
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = authService.Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(authService.Key)
+                        ValidIssuer = JwtSettings.Instance.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(JwtSettings.Instance.Key)
                     };
                 });
+
             builder.Services.AddControllers();
 
             var app = builder.Build();
