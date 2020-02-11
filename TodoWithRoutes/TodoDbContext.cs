@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TodoWithRoutes
+namespace Todos
 {
     public class TodoDbContext : DbContext
     {
