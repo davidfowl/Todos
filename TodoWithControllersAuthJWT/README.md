@@ -11,8 +11,8 @@ For demo purposes, Claims are requested on GenerateToken endpoint.
 ```
 # pwsh
 $base = "http://localhost:8888"
-$payload = "username=user&password=123456&desiredClaims=delete&desiredClaims=view"
-$auth = Invoke-RestMethod "$base/api/todos/GenerateToken?$payload" -Method Get
+$payload = "username=user&password=123456"
+$auth = Invoke-RestMethod "$base/api/auth/GenerateToken?$payload" -Method Get
 # $auth should contains token property
 $info = Invoke-RestMethod "$base/api/todos/2" -Headers @{"Authorization" = "Bearer $($auth.token)"}
 ```
