@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.138
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todos", "TodoBasic\Todos.csproj", "{3F583E94-3C46-4727-A4DE-A4909D4BA094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todos", "TodoBasic\Todos.csproj", "{3F583E94-3C46-4727-A4DE-A4909D4BA094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithDI", "TodoWithDI\TodoWithDI.csproj", "{85653CFF-1A49-407A-8C9D-CF32F8354D36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithDI", "TodoWithDI\TodoWithDI.csproj", "{85653CFF-1A49-407A-8C9D-CF32F8354D36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithScopedApi", "TodoWithScopedApi\TodoWithScopedApi.csproj", "{CC55E7E0-58BF-4458-8E42-7C4DD57BF1ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithScopedApi", "TodoWithScopedApi\TodoWithScopedApi.csproj", "{CC55E7E0-58BF-4458-8E42-7C4DD57BF1ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithNoRequestDelegate", "TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj", "{E59E3EC2-38E4-4268-B92F-903753FD3C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithNoRequestDelegate", "TodoWithNoRequestDelegate\TodoWithNoRequestDelegate.csproj", "{E59E3EC2-38E4-4268-B92F-903753FD3C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithControllers", "TodoWithControllers\TodoWithControllers.csproj", "{277F0126-AA7E-46D6-BDDC-B6B6729644ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllers", "TodoWithControllers\TodoWithControllers.csproj", "{277F0126-AA7E-46D6-BDDC-B6B6729644ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoWithRoutes", "TodoWithRoutes\TodoWithRoutes.csproj", "{C1261F04-4444-453D-BAF2-34A71F31A5AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes", "TodoWithRoutes\TodoWithRoutes.csproj", "{C1261F04-4444-453D-BAF2-34A71F31A5AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllersAuthJWT", "TodoWithControllersAuthJWT\TodoWithControllersAuthJWT.csproj", "{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3F583E94-3C46-4727-A4DE-A4909D4BA094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,5 +99,23 @@ Global
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x64.Build.0 = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{C1261F04-4444-453D-BAF2-34A71F31A5AD}.Release|x86.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x64.Build.0 = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {935ECC60-B263-4513-B141-29F92C2FB080}
 	EndGlobalSection
 EndGlobal
