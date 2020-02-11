@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -10,18 +11,24 @@ namespace Todos
     [Route("/api/todos")]
     public class TodoController : ControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<List<Todo>>> GetAll([FromServices]TodoDbContext db)
+        private readonly TodoDbContext _db;
+        public TodoController(TodoDbContext db)
         {
-            var todos = await db.Todos.ToListAsync();
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Todo>>> GetAll()
+        {
+            var todos = await _db.Todos.ToListAsync();
 
             return todos;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Todo>> Get(long id, [FromServices]TodoDbContext db)
+        public async Task<ActionResult<Todo>> Get(long id)
         {
-            var todo = await db.Todos.FindAsync(id);
+            var todo = await _db.Todos.FindAsync(id);
             if (todo == null)
             {
                 return NotFound();
@@ -31,23 +38,23 @@ namespace Todos
         }
 
         [HttpPost]
-        public async Task Post(Todo todo, [FromServices]TodoDbContext db)
+        public async Task Post(Todo todo)
         {
-            db.Todos.Add(todo);
-            await db.SaveChangesAsync();
+            _db.Todos.Add(todo);
+            await _db.SaveChangesAsync();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id, [FromServices]TodoDbContext db)
+        public async Task<IActionResult> Delete(long id)
         {
-            var todo = await db.Todos.FindAsync(id);
+            var todo = await _db.Todos.FindAsync(id);
             if (todo == null)
             {
                 return NotFound();
             }
 
-            db.Todos.Remove(todo);
-            await db.SaveChangesAsync();
+            _db.Todos.Remove(todo);
+            await _db.SaveChangesAsync();
             return Ok();
         }
     }

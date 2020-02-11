@@ -19,14 +19,14 @@ namespace Todos
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        private async Task GetAll(HttpContext context)
+        private async Task GetAllAsync(HttpContext context)
         {
-            var todos = await _todoApiService.GetAll();
+            var todos = await _todoApiService.GetAllAsync();
             context.Response.ContentType = "application/json";
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        private async Task Get(HttpContext context)
+        private async Task GetAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -35,7 +35,7 @@ namespace Todos
                 return;
             }
 
-            var todo = await _todoApiService.Get(todoId);
+            var todo = await _todoApiService.GetAsync(todoId);
             if (todo == null)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -46,14 +46,14 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        private async Task Post(HttpContext context)
+        private async Task PostAsync(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
-            await _todoApiService.Post(todo);
+            await _todoApiService.PostAsync(todo);
         }
 
-        private async Task Delete(HttpContext context)
+        private async Task DeleteAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -62,7 +62,7 @@ namespace Todos
                 return;
             }
 
-            if (!await _todoApiService.Delete(todoId))
+            if (!await _todoApiService.DeleteAsync(todoId))
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
@@ -71,10 +71,10 @@ namespace Todos
 
         public static void MapRoutes(IEndpointRouteBuilder endpoints, ApiActivator<TodoApi> activator)
         {
-            endpoints.MapGet("/api/todos", activator(api => api.GetAll));
-            endpoints.MapGet("/api/todos/{id}", activator(api => api.Get));
-            endpoints.MapPost("/api/todos", activator(api => api.Post));
-            endpoints.MapDelete("/api/todos/{id}", activator(api => api.Delete));
+            endpoints.MapGet("/api/todos", activator(api => api.GetAllAsync));
+            endpoints.MapGet("/api/todos/{id}", activator(api => api.GetAsync));
+            endpoints.MapPost("/api/todos", activator(api => api.PostAsync));
+            endpoints.MapDelete("/api/todos/{id}", activator(api => api.DeleteAsync));
         }
     }
 }
