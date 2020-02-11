@@ -20,7 +20,7 @@ namespace Todos
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public async Task GetAll(HttpContext context)
+        public async Task GetAllAsync(HttpContext context)
         {
             var todos = await _db.Todos.ToListAsync();
 
@@ -28,7 +28,7 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
         }
 
-        public async Task Get(HttpContext context)
+        public async Task GetAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -48,15 +48,15 @@ namespace Todos
             await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
         }
 
-        public async Task Post(HttpContext context)
+        public async Task PostAsync(HttpContext context)
         {
             var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
 
-            _db.Todos.Add(todo);
+            await _db.Todos.AddAsync(todo);
             await _db.SaveChangesAsync();
         }
 
-        public async Task Delete(HttpContext context)
+        public async Task DeleteAsync(HttpContext context)
         {
             var id = (string)context.Request.RouteValues["id"];
             if (id == null || !long.TryParse(id, out var todoId))
@@ -78,10 +78,10 @@ namespace Todos
 
         public static void MapRoutes(IEndpointRouteBuilder endpoints, ApiActivator<TodoApi> activator)
         {
-            endpoints.MapGet("/api/todos", activator(api => api.GetAll));
-            endpoints.MapGet("/api/todos/{id}", activator(api => api.Get));
-            endpoints.MapPost("/api/todos", activator(api => api.Post));
-            endpoints.MapDelete("/api/todos/{id}", activator(api => api.Delete));
+            endpoints.MapGet("/api/todos", activator(api => api.GetAllAsync));
+            endpoints.MapGet("/api/todos/{id}", activator(api => api.GetAsync));
+            endpoints.MapPost("/api/todos", activator(api => api.PostAsync));
+            endpoints.MapDelete("/api/todos/{id}", activator(api => api.DeleteAsync));
         }
     }
 }
