@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TodoBasic
+namespace Todos
 {
     public class TodoDbContext : DbContext
     {

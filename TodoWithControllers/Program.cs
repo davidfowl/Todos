@@ -15,8 +15,6 @@ namespace TodoWithControllers
             builder.Services.AddControllers();
 
             var app = builder.Build();
-            if (args?.Length > 0)
-                app.Listen($"https://localhosts:{args[0]}");
 
             app.MapControllers();
 
