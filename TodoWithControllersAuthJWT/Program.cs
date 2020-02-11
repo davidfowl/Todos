@@ -14,25 +14,18 @@ namespace Todos
 {
     class Program
     {
-        public static string Issuer = "iamissuer";
-        public static byte[] Key = new byte[100];
-
-        public static Dictionary<string, (string Password, string[] Claims)>  validUsers = new Dictionary<string, (string Password, string[] Claims)>
-        {
-            ["user"] = ("123456", new[] { "can_delete", "can_view" }),
-        };
         static async Task Main(string[] args)
         {
-            RandomNumberGenerator.Create().GetBytes(Key);
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
-            builder.Services.AddSingleton<IAuthService, AuthService>(service => new AuthService(Issuer, Key, validUsers));
+            builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("admin", policy => policy.RequireClaim("can_delete", "true"));
                 options.AddPolicy("user", policy => policy.RequireClaim("can_view", "true"));
             });
+            var authService = builder.Services.BuildServiceProvider().GetService<IAuthService>();
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -43,8 +36,8 @@ namespace Todos
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(Key)
+                        ValidIssuer = authService.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(authService.Key)
                     };
                 });
             builder.Services.AddControllers();

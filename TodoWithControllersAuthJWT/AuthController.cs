@@ -13,26 +13,26 @@ namespace TodoWithControllersAuthJWT
     [AllowAnonymous]
     public class AuthController: ControllerBase
     {
-        private readonly IAuthService _userService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IAuthService userService)
+        public AuthController(IAuthService authService)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));;
+            _authService = authService ?? throw new ArgumentNullException(nameof(authService));;
         }
         [HttpGet(nameof(GenerateToken))]
         public IActionResult GenerateToken([FromQuery] string username, [FromQuery] string password)
         {
-            bool isValidUser = _userService.IsValid(username, password);
+            bool isValidUser = _authService.IsValid(username, password);
             if (!isValidUser)
             {
                 return BadRequest("invalid user/pass combination");
             }
-            var claims = _userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
+            var claims = _authService.GetUserClaims(username).Select(name => new Claim(name, "true"));
 
-            var key = new SymmetricSecurityKey(_userService.Key);
+            var key = new SymmetricSecurityKey(_authService.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: _userService.Issuer,
+                issuer: _authService.Issuer,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds

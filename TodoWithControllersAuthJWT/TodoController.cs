@@ -19,6 +19,7 @@ namespace Todos
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
+
         [HttpGet]
         public async Task<ActionResult<List<Todo>>> GetAll()
         {
