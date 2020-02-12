@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using TodoWithControllersAuthJWT;
+﻿using System.Collections.Generic;
 
 namespace Todos
 {
-    internal class AuthService : IAuthService
+    internal class UserService
     {
         private readonly Dictionary<string, (string Password, string[] Claims)> _users = new Dictionary<string, (string Password, string[] Claims)>
         {

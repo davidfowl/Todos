@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes", "TodoWithR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllersAuthJWT", "TodoWithControllersAuthJWT\TodoWithControllersAuthJWT.csproj", "{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoBasicWithAuth", "TodoBasicWithAuth\TodoBasicWithAuth.csproj", "{760DCDAA-3DD7-42F0-A728-46588C93FCDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x64.Build.0 = Release|Any CPU
 		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}.Release|x86.Build.0 = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|x64.Build.0 = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Debug|x86.Build.0 = Debug|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|x64.ActiveCfg = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|x64.Build.0 = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|x86.ActiveCfg = Release|Any CPU
+		{760DCDAA-3DD7-42F0-A728-46588C93FCDC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

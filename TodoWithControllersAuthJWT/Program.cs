@@ -20,7 +20,7 @@ namespace Todos
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
-            builder.Services.AddSingleton<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("admin", policy => policy.RequireClaim("can_delete", "true"));
