@@ -59,7 +59,7 @@ namespace Todos
         {
             var userInfo = await JsonSerializer.DeserializeAsync<UserInfo>(context.Request.Body, _options);
 
-            bool isValidUser = userService.IsValid(userInfo.UserName, userInfo.Password);
+            bool isValidUser = userService.IsValid(userInfo?.UserName, userInfo?.Password);
             if (!isValidUser)
             {
                 context.Response.StatusCode = 400;
