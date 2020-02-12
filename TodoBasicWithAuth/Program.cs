@@ -54,7 +54,7 @@ namespace Todos
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapGet("/api/auth/token", context => AuthenticateAsync(userService, context));
+            app.MapGet("/api/auth/token", context => GenerateTokenAsync(userService, context));
 
             app.MapGet("/api/todos", GetAllAsync).RequireAuthorization();
             app.MapGet("/api/todos/{id}", GetAsync).RequireAuthorization("user");
@@ -64,7 +64,7 @@ namespace Todos
             await app.RunAsync();
         }
 
-        private static async Task AuthenticateAsync(UserService userService, HttpContext context)
+        private static async Task GenerateTokenAsync(UserService userService, HttpContext context)
         {
             var username = context.Request.Query["username"];
             var password = context.Request.Query["password"];
@@ -73,6 +73,7 @@ namespace Todos
             if (!isValidUser)
             {
                 context.Response.StatusCode = 400;
+                return;
             }
 
             var claims = userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
