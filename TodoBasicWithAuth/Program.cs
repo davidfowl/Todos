@@ -26,6 +26,8 @@ namespace Todos
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var jwtSettings = JwtSettings.FromConfiguration(builder.Configuration);
+
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("admin", policy => policy.RequireClaim("can_delete", "true"));
@@ -34,18 +36,7 @@ namespace Todos
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = JwtSettings.Instance.Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(JwtSettings.Instance.Key)
-                    };
-                });
+                .AddJwtBearer(options => options.TokenValidationParameters = jwtSettings.TokenValidationParameters);
 
             var userService = new UserService();
 
@@ -54,7 +45,7 @@ namespace Todos
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapGet("/api/auth/token", context => GenerateTokenAsync(userService, context));
+            app.MapGet("/api/auth/token", context => GenerateTokenAsync(userService, jwtSettings, context));
 
             app.MapGet("/api/todos", GetAllAsync).RequireAuthorization();
             app.MapGet("/api/todos/{id}", GetAsync).RequireAuthorization("user");
@@ -64,7 +55,7 @@ namespace Todos
             await app.RunAsync();
         }
 
-        private static async Task GenerateTokenAsync(UserService userService, HttpContext context)
+        private static async Task GenerateTokenAsync(UserService userService, JwtSettings jwtSettings, HttpContext context)
         {
             var username = context.Request.Query["username"];
             var password = context.Request.Query["password"];
@@ -78,10 +69,10 @@ namespace Todos
 
             var claims = userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
 
-            var key = new SymmetricSecurityKey(JwtSettings.Instance.Key);
+            var key = new SymmetricSecurityKey(jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: JwtSettings.Instance.Issuer,
+                issuer: jwtSettings.Issuer,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds
@@ -130,7 +121,7 @@ namespace Todos
             using var db = new TodoDbContext();
             await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
-            
+
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
 
@@ -153,7 +144,7 @@ namespace Todos
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
-            
+
             context.Response.StatusCode = StatusCodes.Status204NoContent;
         }
     }

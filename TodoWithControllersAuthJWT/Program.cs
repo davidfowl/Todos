@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -19,8 +15,12 @@ namespace Todos
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var jwtSettings = JwtSettings.FromConfiguration(builder.Configuration);
+
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton(jwtSettings);
+
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("admin", policy => policy.RequireClaim("can_delete", "true"));
@@ -29,18 +29,7 @@ namespace Todos
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = JwtSettings.Instance.Issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(JwtSettings.Instance.Key)
-                    };
-                });
+                .AddJwtBearer(options => options.TokenValidationParameters = jwtSettings.TokenValidationParameters);
 
             builder.Services.AddControllers();
 

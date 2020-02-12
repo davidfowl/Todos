@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace TodoWithControllersAuthJWT
@@ -11,13 +12,15 @@ namespace TodoWithControllersAuthJWT
     [ApiController]
     [Route("/api/auth")]
     [AllowAnonymous]
-    public class AuthController: ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly JwtSettings _jwtSettings;
 
-        public AuthController(IUserService userService)
+        public AuthController(IUserService userService, JwtSettings jwtSettings)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
         }
 
         [HttpGet("token")]
@@ -31,10 +34,10 @@ namespace TodoWithControllersAuthJWT
 
             var claims = _userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
 
-            var key = new SymmetricSecurityKey(JwtSettings.Instance.Key);
+            var key = new SymmetricSecurityKey(_jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: JwtSettings.Instance.Issuer,
+                issuer: _jwtSettings.Issuer,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds
