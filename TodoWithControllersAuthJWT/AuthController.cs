@@ -23,16 +23,16 @@ namespace TodoWithControllersAuthJWT
             _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
         }
 
-        [HttpGet("token")]
-        public IActionResult GenerateToken([FromQuery] string username, [FromQuery] string password)
+        [HttpPost("token")]
+        public IActionResult GenerateToken(UserInfo userInfo)
         {
-            bool isValidUser = _userService.IsValid(username, password);
+            bool isValidUser = _userService.IsValid(userInfo.UserName, userInfo.Password);
             if (!isValidUser)
             {
                 return BadRequest("invalid user/pass combination");
             }
 
-            var claims = _userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
+            var claims = _userService.GetUserClaims(userInfo.UserName).Select(name => new Claim(name, "true"));
 
             var key = new SymmetricSecurityKey(_jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

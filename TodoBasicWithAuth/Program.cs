@@ -45,7 +45,7 @@ namespace Todos
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapGet("/api/auth/token", context => GenerateTokenAsync(userService, jwtSettings, context));
+            app.MapPost("/api/auth/token", context => GenerateTokenAsync(userService, jwtSettings, context));
 
             app.MapGet("/api/todos", GetAllAsync).RequireAuthorization();
             app.MapGet("/api/todos/{id}", GetAsync).RequireAuthorization("user");
@@ -57,17 +57,16 @@ namespace Todos
 
         private static async Task GenerateTokenAsync(UserService userService, JwtSettings jwtSettings, HttpContext context)
         {
-            var username = context.Request.Query["username"];
-            var password = context.Request.Query["password"];
+            var userInfo = await JsonSerializer.DeserializeAsync<UserInfo>(context.Request.Body, _options);
 
-            bool isValidUser = userService.IsValid(username, password);
+            bool isValidUser = userService.IsValid(userInfo.UserName, userInfo.Password);
             if (!isValidUser)
             {
                 context.Response.StatusCode = 400;
                 return;
             }
 
-            var claims = userService.GetUserClaims(username).Select(name => new Claim(name, "true"));
+            var claims = userService.GetUserClaims(userInfo.UserName).Select(name => new Claim(name, "true"));
 
             var key = new SymmetricSecurityKey(jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -75,8 +74,7 @@ namespace Todos
                 issuer: jwtSettings.Issuer,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds
-                );
+                signingCredentials: creds);
 
             await JsonSerializer.SerializeAsync(context.Response.Body, new
             {
