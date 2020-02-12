@@ -72,6 +72,7 @@ namespace Todos
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
+                audience: jwtSettings.Audience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);

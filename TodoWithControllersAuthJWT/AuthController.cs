@@ -38,6 +38,7 @@ namespace TodoWithControllersAuthJWT
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds
