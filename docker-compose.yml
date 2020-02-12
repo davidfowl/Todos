@@ -42,4 +42,4 @@ services:
       context: .
       dockerfile: Dockerfile_todo_with_scoped_api
     environment:
-      ASPNETCORE_URLS: http://0.0.0.0:6060
+      ASPNETCORE_URLS: http://0.0.0.0:6070
