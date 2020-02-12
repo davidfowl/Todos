@@ -1,0 +1,8 @@
+**/publish/
+**/bin/
+**/obj/
+**/out/
+**/.idea/
+**/dist*
+**/.vs/
+**/.vscode/
