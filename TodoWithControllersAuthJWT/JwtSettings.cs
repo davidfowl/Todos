@@ -33,20 +33,20 @@ namespace TodoWithControllersAuthJWT
 
         public static JwtSettings FromConfiguration(IConfiguration configuration)
         {
-            // In real life this would come from configuration
-            var key = new byte[100];
-
             var issuser = configuration["jwt:issuer"] ?? "defaultissuer";
             var auidence = configuration["jwt:auidence"] ?? "defaultauidence";
             var base64Key = configuration["jwt:key"];
 
+            byte[] key;
             if (!string.IsNullOrEmpty(base64Key))
             {
                 key = Convert.FromBase64String(base64Key);
             }
             else
             {
-                RandomNumberGenerator.Create().GetBytes(key);
+                // In real life this would come from configuration
+                key = new byte[32];
+                RandomNumberGenerator.Fill(key);
             }
 
             return new JwtSettings(key, issuser, auidence);

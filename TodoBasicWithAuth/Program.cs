@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,7 +58,7 @@ namespace Todos
 
         private static async Task GenerateTokenAsync(UserService userService, JwtSettings jwtSettings, HttpContext context)
         {
-            var userInfo = await JsonSerializer.DeserializeAsync<UserInfo>(context.Request.Body, _options);
+            var userInfo = await JsonSerializer.DeserializeAsync<LoginInfo>(context.Request.Body, _options);
 
             bool isValidUser = userService.IsValid(userInfo?.UserName, userInfo?.Password);
             if (!isValidUser)

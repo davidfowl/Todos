@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace TodoWithControllersAuthJWT
@@ -14,25 +15,44 @@ namespace TodoWithControllersAuthJWT
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly UserManager<TodoUser> _userManager;
         private readonly JwtSettings _jwtSettings;
 
-        public AuthController(IUserService userService, JwtSettings jwtSettings)
+        public AuthController(UserManager<TodoUser> userManager, JwtSettings jwtSettings)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
+            _userManager = userManager;
+            _jwtSettings = jwtSettings;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(LoginInfo loginInfo)
+        {
+            var result = await _userManager.CreateAsync(new TodoUser { UserName = loginInfo.UserName }, loginInfo.Password);
+
+            if (result.Succeeded)
+            {
+                return Accepted();
+            }
+
+            return BadRequest(result.Errors);
         }
 
         [HttpPost("token")]
-        public IActionResult GenerateToken(UserInfo userInfo)
+        public async Task<IActionResult> GenerateToken(LoginInfo loginInfo)
         {
-            bool isValidUser = _userService.IsValid(userInfo.UserName, userInfo.Password);
-            if (!isValidUser)
+            var user = await _userManager.FindByNameAsync(loginInfo.UserName);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginInfo.Password))
             {
-                return BadRequest("invalid user/pass combination");
+                return Unauthorized();
             }
 
-            var claims = _userService.GetUserClaims(userInfo.UserName).Select(name => new Claim(name, "true"));
+            var claims = new List<Claim>();
+
+            if (user.IsAdmin)
+            {
+                claims.Add(new Claim("can_delete", "true"));
+                claims.Add(new Claim("can_view", "true"));
+            }
 
             var key = new SymmetricSecurityKey(_jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

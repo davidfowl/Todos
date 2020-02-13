@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using TodoWithControllersAuthJWT;
 
-namespace Todos
+namespace TodoWithControllersAuthJWT
 {
     class Program
     {
@@ -17,8 +15,10 @@ namespace Todos
 
             var jwtSettings = JwtSettings.FromConfiguration(builder.Configuration);
 
+            builder.Services.AddIdentityCore<TodoUser>()
+                            .AddEntityFrameworkStores<TodoDbContext>();
+
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
-            builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton(jwtSettings);
 
             builder.Services.AddAuthorization(options =>

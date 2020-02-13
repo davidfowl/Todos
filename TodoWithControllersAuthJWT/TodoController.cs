@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoWithControllersAuthJWT
 {
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -15,6 +15,7 @@ namespace Todos
     public class TodoController : ControllerBase
     {
         private readonly TodoDbContext _db;
+
         public TodoController(TodoDbContext db)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
@@ -23,9 +24,7 @@ namespace Todos
         [HttpGet]
         public async Task<ActionResult<List<Todo>>> GetAll()
         {
-            var todos = await _db.Todos.ToListAsync();
-
-            return todos;
+            return await _db.Todos.ToListAsync();
         }
 
         [HttpGet("{id}")]
