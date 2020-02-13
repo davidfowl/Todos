@@ -36,8 +36,8 @@ namespace Todos
             // In real life this would come from configuration
             var key = new byte[100];
 
-            var issuser = configuration["jwt:issuer"] ?? "defaultissuer";
-            var auidence = configuration["jwt:auidence"] ?? "defaultauidence";
+            var issuer = configuration["jwt:issuer"] ?? "defaultissuer";
+            var audience = configuration["jwt:audience"] ?? "defaultaudience";
             var base64Key = configuration["jwt:key"];
 
             if (!string.IsNullOrEmpty(base64Key))
@@ -49,7 +49,7 @@ namespace Todos
                 RandomNumberGenerator.Create().GetBytes(key);
             }
 
-            return new JwtSettings(key, issuser, auidence);
+            return new JwtSettings(key, issuer, audience);
         }
     }
 }

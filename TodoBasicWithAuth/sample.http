@@ -1,0 +1,63 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5fZGVsZXRlIjoidHJ1ZSIsImNhbl92aWV3IjoidHJ1ZSIsImV4cCI6MTU4MTU2NTU2MiwiaXNzIjoiZGVmYXVsdGlzc3VlciIsImF1ZCI6ImRlZmF1bHRhdWRpZW5jZSJ9.XJyk0vIcuy1x4Kdk2O6N9I3Ibg3Qs4dOlFiiQOle2pk
+@todo_id = 1
+###
+
+// Needs https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+// Get all todos (no authentication)
+GET http://localhost:5000/api/todos
+
+
+###
+
+// Authenticate as Admin
+POST http://localhost:5000/api/auth/token
+Content-Type: application/json
+
+{
+    "username" : "admin",
+    "password" : "123456"
+}
+
+###
+
+// Authenticate as regular user
+POST http://localhost:5000/api/auth/token
+Content-Type: application/json
+
+{
+    "username" : "user",
+    "password" : "hunter2"
+}
+
+###
+
+// Get all todos with auth
+GET http://localhost:5000/api/todos
+Authorization: Bearer {{token}}
+
+
+###
+
+
+// Get a single todo
+GET http://localhost:5000/api/todos/{{todo_id}}
+Authorization: Bearer {{token}}
+
+
+###
+
+// New Todo
+POST http://localhost:5000/api/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "Name" : "Write unit tests.",
+    "IsComplete" : false
+}
+
+###
+
+// Delete Todo
+DELETE http://localhost:5000/api/todos/{{todo_id}}
+Authorization: Bearer {{token}}
