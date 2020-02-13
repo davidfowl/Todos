@@ -90,8 +90,8 @@ namespace Todos
             return context =>
             {
                 // Resolve the service from the container
-                var db = context.RequestServices.GetRequiredService<UserManager<TodoUser>>();
-                return handler(db, context);
+                var userManager = context.RequestServices.GetRequiredService<UserManager<TodoUser>>();
+                return handler(userManager, context);
             };
         }
     }
