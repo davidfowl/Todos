@@ -10,7 +10,7 @@ namespace Todos
         static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             builder.Services.AddDbContext<TodoDbContext>(options => options.UseInMemoryDatabase("Todos"));
             builder.Services.AddControllers();
 
