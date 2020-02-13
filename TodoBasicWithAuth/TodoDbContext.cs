@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Todos
 {
-    public class TodoDbContext : DbContext
+    public class TodoDbContext : IdentityDbContext<TodoUser>
     {
-        public DbSet<Todo> Todos { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public TodoDbContext(DbContextOptions<TodoDbContext> options) : base(options)
         {
-            optionsBuilder.UseInMemoryDatabase("Todos");
+
         }
+
+        public DbSet<Todo> Todos { get; set; }
     }
 }
