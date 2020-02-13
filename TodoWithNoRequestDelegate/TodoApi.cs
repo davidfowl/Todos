@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Todos
+namespace TodoWithNoRequestDelegate
 {
     public partial class TodoApi
     {

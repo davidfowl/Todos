@@ -1,4 +1,4 @@
-﻿namespace Todos
+﻿namespace TodoWithNoRequestDelegate
 {
     public class Todo
     {

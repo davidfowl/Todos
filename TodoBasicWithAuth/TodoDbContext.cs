@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoBasicWithAuth
 {
     public class TodoDbContext : IdentityDbContext<TodoUser>
     {

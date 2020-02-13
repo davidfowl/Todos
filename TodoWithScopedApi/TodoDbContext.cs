@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoWithScopedApi
 {
     public class TodoDbContext : DbContext
     {

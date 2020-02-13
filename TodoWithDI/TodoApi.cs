@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Todos
+namespace TodoWithDI
 {
     public class TodoApi
     {

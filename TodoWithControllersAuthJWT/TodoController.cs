@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
 namespace TodoWithControllersAuthJWT
@@ -41,10 +40,11 @@ namespace TodoWithControllersAuthJWT
         }
 
         [HttpPost]
-        public async Task Post(Todo todo)
+        public async Task<IActionResult> Post(Todo todo)
         {
             _db.Todos.Add(todo);
             await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(Get), new {todo.Id}, todo);
         }
 
         [HttpDelete("{id}")]
@@ -59,7 +59,7 @@ namespace TodoWithControllersAuthJWT
 
             _db.Todos.Remove(todo);
             await _db.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
     }
 }

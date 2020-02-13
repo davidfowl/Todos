@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoWithNoRequestDelegate
 {
     public partial class TodoApi
     {

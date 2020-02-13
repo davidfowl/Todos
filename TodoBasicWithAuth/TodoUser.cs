@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Todos
+namespace TodoBasicWithAuth
 {
     public class TodoUser : IdentityUser
     {

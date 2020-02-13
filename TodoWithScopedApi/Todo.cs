@@ -1,4 +1,4 @@
-﻿namespace Todos
+﻿namespace TodoWithScopedApi
 {
     public class Todo
     {

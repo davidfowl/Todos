@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
-namespace Todos
+namespace TodoWithControllers
 {
     [ApiController]
     [Route("/api/todos")]
@@ -21,7 +20,6 @@ namespace Todos
         public async Task<ActionResult<List<Todo>>> GetAll()
         {
             var todos = await _db.Todos.ToListAsync();
-
             return todos;
         }
 
@@ -38,10 +36,11 @@ namespace Todos
         }
 
         [HttpPost]
-        public async Task Post(Todo todo)
+        public async Task<IActionResult> Post(Todo todo)
         {
             _db.Todos.Add(todo);
             await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(Get), new {todo.Id}, todo);
         }
 
         [HttpDelete("{id}")]
@@ -55,7 +54,7 @@ namespace Todos
 
             _db.Todos.Remove(todo);
             await _db.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
     }
 }

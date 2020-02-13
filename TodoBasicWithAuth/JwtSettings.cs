@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Todos
+namespace TodoBasicWithAuth
 {
     public class JwtSettings
     {

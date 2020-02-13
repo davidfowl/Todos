@@ -1,4 +1,4 @@
-﻿namespace Todos
+﻿namespace TodoBasicWithAuth
 {
     public class Todo
     {
