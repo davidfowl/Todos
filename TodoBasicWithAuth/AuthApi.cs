@@ -30,9 +30,9 @@ namespace Todos
 
         public async Task CreateUser(UserManager<TodoUser> userManager, HttpContext context)
         {
-            var loginInfo = await JsonSerializer.DeserializeAsync<LoginInfo>(context.Request.Body, _options);
+            var loginInfo = await JsonSerializer.DeserializeAsync<CreateUser>(context.Request.Body, _options);
 
-            var result = await userManager.CreateAsync(new TodoUser { UserName = loginInfo.UserName }, loginInfo.Password);
+            var result = await userManager.CreateAsync(new TodoUser { UserName = loginInfo.UserName, IsAdmin = loginInfo.IsAdmin }, loginInfo.Password);
 
             if (result.Succeeded)
             {
@@ -55,12 +55,14 @@ namespace Todos
             }
 
             var claims = new List<Claim>();
-
+            claims.Add(new Claim("can_view", "true"));
+            
             if (user.IsAdmin)
             {
                 claims.Add(new Claim("can_delete", "true"));
-                claims.Add(new Claim("can_view", "true"));
             }
+
+
 
             var key = new SymmetricSecurityKey(_jwtSettings.Key);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
