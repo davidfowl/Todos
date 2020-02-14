@@ -27,14 +27,14 @@ namespace Todos
         {
             if (!context.Request.RouteValues.TryGet("id", out long id))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.StatusCode = 400;
                 return;
             }
 
             var todo = await GetAsync(id);
             if (todo == null)
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                context.Response.StatusCode = 404;
                 return;
             }
 
@@ -52,13 +52,13 @@ namespace Todos
         {
             if (!context.Request.RouteValues.TryGet("id", out long id))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.StatusCode = 400;
                 return;
             }
 
             if (!await DeleteAsync(id))
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                context.Response.StatusCode = 404;
                 return;
             }
         }

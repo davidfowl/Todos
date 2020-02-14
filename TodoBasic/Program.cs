@@ -32,7 +32,7 @@ namespace Todos
         {
             if (!context.Request.RouteValues.TryGet("id", out long id))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.StatusCode = 400;
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace Todos
             var todo = await db.Todos.FindAsync(id);
             if (todo == null)
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                context.Response.StatusCode = 404;
                 return;
             }
 
@@ -54,15 +54,15 @@ namespace Todos
             using var db = new TodoDbContext();
             await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
-            
-            context.Response.StatusCode = StatusCodes.Status204NoContent;
+
+            context.Response.StatusCode = 204;
         }
 
         static async Task DeleteAsync(HttpContext context)
         {
             if (!context.Request.RouteValues.TryGet("id", out long id))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.StatusCode = 400;
                 return;
             }
 
@@ -70,14 +70,14 @@ namespace Todos
             var todo = await db.Todos.FindAsync(id);
             if (todo == null)
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                context.Response.StatusCode = 404;
                 return;
             }
 
             db.Todos.Remove(todo);
             await db.SaveChangesAsync();
-            
-            context.Response.StatusCode = StatusCodes.Status204NoContent;
+
+            context.Response.StatusCode = 204;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Todos
                 return;
             }
 
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.StatusCode = 400;
         }
 
         public async Task GenerateTokenAsync(UserManager<TodoUser> userManager, HttpContext context)
