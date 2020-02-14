@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -9,12 +8,6 @@ namespace Todos
 {
     class Program
     {
-        private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
         static async Task Main(string[] args)
         {
             var app = WebApplication.Create(args);
@@ -32,7 +25,7 @@ namespace Todos
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
 
-            await context.Response.WriteJsonAsync(todos, _options);
+            await context.Response.WriteJsonAsync(todos);
         }
 
         static async Task GetAsync(HttpContext context)
@@ -52,12 +45,12 @@ namespace Todos
                 return;
             }
 
-            await context.Response.WriteJsonAsync(todo, _options);
+            await context.Response.WriteJsonAsync(todo);
         }
 
         static async Task PostAsync(HttpContext context)
         {
-            var todo = await context.Request.ReadJsonAsync<Todo>(_options);
+            var todo = await context.Request.ReadJsonAsync<Todo>();
 
             using var db = new TodoDbContext();
             await db.Todos.AddAsync(todo);
