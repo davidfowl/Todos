@@ -5,7 +5,7 @@ namespace Todos
     public class Todo
     {
         [JsonPropertyName("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
