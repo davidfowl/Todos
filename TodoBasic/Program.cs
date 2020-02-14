@@ -30,7 +30,8 @@ namespace Todos
 
         static async Task GetAsync(HttpContext context)
         {
-            if (!context.Request.RouteValues.TryGet("id", out int id))
+            var (id, ok) = context.Request.RouteValues.Get<int>("id");
+            if (!ok)
             {
                 context.Response.StatusCode = 400;
                 return;
@@ -60,7 +61,8 @@ namespace Todos
 
         static async Task DeleteAsync(HttpContext context)
         {
-            if (!context.Request.RouteValues.TryGet("id", out int id))
+            var (id, ok) = context.Request.RouteValues.Get<int>("id");
+            if (!ok)
             {
                 context.Response.StatusCode = 400;
                 return;
