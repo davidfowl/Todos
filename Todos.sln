@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithRoutes", "TodoWithR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoWithControllersAuthJWT", "TodoWithControllersAuthJWT\TodoWithControllersAuthJWT.csproj", "{30ECBE4D-02A9-4566-B2FD-1D050E3F03DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoBasicWithAuth", "TodoBasicWithAuth\TodoBasicWithAuth.csproj", "{760DCDAA-3DD7-42F0-A728-46588C93FCDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoBasicWithAuth", "TodoBasicWithAuth\TodoBasicWithAuth.csproj", "{760DCDAA-3DD7-42F0-A728-46588C93FCDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{454DA4CA-4163-4794-BC12-1030BD6C38C7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
