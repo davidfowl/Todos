@@ -30,7 +30,7 @@ namespace Todos
 
         public async Task CreateUser(UserManager<TodoUser> userManager, HttpContext context)
         {
-            var loginInfo = await JsonSerializer.DeserializeAsync<LoginInfo>(context.Request.Body, _options);
+            var loginInfo = await context.Request.ReadJsonAsync<LoginInfo>(_options);
 
             var result = await userManager.CreateAsync(new TodoUser { UserName = loginInfo.UserName }, loginInfo.Password);
 
@@ -45,7 +45,7 @@ namespace Todos
 
         public async Task GenerateTokenAsync(UserManager<TodoUser> userManager, HttpContext context)
         {
-            var loginInfo = await JsonSerializer.DeserializeAsync<LoginInfo>(context.Request.Body, _options);
+            var loginInfo = await context.Request.ReadJsonAsync<LoginInfo>(_options);
 
             var user = await userManager.FindByNameAsync(loginInfo?.UserName);
             if (user == null || !await userManager.CheckPasswordAsync(user, loginInfo.Password))
@@ -72,8 +72,7 @@ namespace Todos
                 signingCredentials: creds
                 );
 
-            context.Response.ContentType = "application/json";
-            await JsonSerializer.SerializeAsync(context.Response.Body, new
+            await context.Response.WriteJsonAsync(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });

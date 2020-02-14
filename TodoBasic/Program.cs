@@ -32,8 +32,7 @@ namespace Todos
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
 
-            context.Response.ContentType = "application/json";
-            await JsonSerializer.SerializeAsync(context.Response.Body, todos, _options);
+            await context.Response.WriteJsonAsync(todos, _options);
         }
 
         static async Task GetAsync(HttpContext context)
@@ -53,13 +52,12 @@ namespace Todos
                 return;
             }
 
-            context.Response.ContentType = "application/json";
-            await JsonSerializer.SerializeAsync(context.Response.Body, todo, _options);
+            await context.Response.WriteJsonAsync(todo, _options);
         }
 
         static async Task PostAsync(HttpContext context)
         {
-            var todo = await JsonSerializer.DeserializeAsync<Todo>(context.Request.Body, _options);
+            var todo = await context.Request.ReadJsonAsync<Todo>(_options);
 
             using var db = new TodoDbContext();
             await db.Todos.AddAsync(todo);
