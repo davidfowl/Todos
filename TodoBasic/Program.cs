@@ -30,15 +30,14 @@ namespace Todos
 
         static async Task GetAsync(HttpContext context)
         {
-            var id = (string)context.Request.RouteValues["id"];
-            if (id == null || !long.TryParse(id, out var todoId))
+            if (!context.Request.RouteValues.TryGet("id", out long id))
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 return;
             }
 
             using var db = new TodoDbContext();
-            var todo = await db.Todos.FindAsync(todoId);
+            var todo = await db.Todos.FindAsync(id);
             if (todo == null)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -61,15 +60,14 @@ namespace Todos
 
         static async Task DeleteAsync(HttpContext context)
         {
-            var id = (string)context.Request.RouteValues["id"];
-            if (id == null || !long.TryParse(id, out var todoId))
+            if (!context.Request.RouteValues.TryGet("id", out long id))
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 return;
             }
 
             using var db = new TodoDbContext();
-            var todo = await db.Todos.FindAsync(todoId);
+            var todo = await db.Todos.FindAsync(id);
             if (todo == null)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
