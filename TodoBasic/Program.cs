@@ -12,15 +12,16 @@ namespace Todos
         {
             var app = WebApplication.Create(args);
 
-            app.MapGet("/api/todos", GetAllAsync);
-            app.MapGet("/api/todos/{id}", GetAsync);
-            app.MapPost("/api/todos", PostAsync);
-            app.MapDelete("/api/todos/{id}", DeleteAsync);
+            app.MapGet("/api/todos", GetTodos);
+            app.MapGet("/api/todos/{id}", GetTodo);
+            app.MapPost("/api/todos", CreateTodo);
+            app.MapPost("/api/todos/{id}", UpdateCompleted);
+            app.MapDelete("/api/todos/{id}", DeleteTodo);
 
             await app.RunAsync();
         }
 
-        static async Task GetAllAsync(HttpContext context)
+        static async Task GetTodos(HttpContext context)
         {
             using var db = new TodoDbContext();
             var todos = await db.Todos.ToListAsync();
@@ -28,7 +29,7 @@ namespace Todos
             await context.Response.WriteJsonAsync(todos);
         }
 
-        static async Task GetAsync(HttpContext context)
+        static async Task GetTodo(HttpContext context)
         {
             if (!context.Request.RouteValues.TryGet("id", out int id))
             {
@@ -47,7 +48,7 @@ namespace Todos
             await context.Response.WriteJsonAsync(todo);
         }
 
-        static async Task PostAsync(HttpContext context)
+        static async Task CreateTodo(HttpContext context)
         {
             var todo = await context.Request.ReadJsonAsync<Todo>();
 
@@ -58,7 +59,32 @@ namespace Todos
             context.Response.StatusCode = 204;
         }
 
-        static async Task DeleteAsync(HttpContext context)
+        static async Task UpdateCompleted(HttpContext context)
+        {
+            if (!context.Request.RouteValues.TryGet("id", out int id))
+            {
+                context.Response.StatusCode = 400;
+                return;
+            }
+
+            using var db = new TodoDbContext();
+            var todo = await db.Todos.FindAsync(id);
+
+            if (todo == null)
+            {
+                context.Response.StatusCode = 404;
+                return;
+            }
+
+            var inputTodo = await context.Request.ReadJsonAsync<Todo>();
+            todo.IsComplete = inputTodo.IsComplete;
+
+            await db.SaveChangesAsync();
+
+            context.Response.StatusCode = 204;
+        }
+
+        static async Task DeleteTodo(HttpContext context)
         {
             if (!context.Request.RouteValues.TryGet("id", out int id))
             {
