@@ -6,7 +6,9 @@
 <section class="todoapp">
     <header class="header">
         <h1>todos</h1>
-        <input class="new-todo" placeholder="What needs to be done?" @bind="newTodo" autofocus="" @onkeyup="AddTodo">
+        <form @onsubmit="AddTodo">
+            <input class="new-todo" placeholder="What needs to be done?" @bind="newTodo" autofocus="">
+        </form>
     </header>
     <section class="main" style="display: block;">
         <input class="toggle-all" id="toggle-all" type="checkbox">
@@ -37,16 +39,13 @@
         Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
     }
 
-    async Task AddTodo(KeyboardEventArgs e)
+    async Task AddTodo()
     {
-        if (e.Key == "Enter")
-        {
-            await Http.PostJsonAsync("/api/todos", new Todo { Name = newTodo });
+        await Http.PostJsonAsync("/api/todos", new Todo { Name = newTodo });
 
-            Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
+        Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
 
-            newTodo = null;
-        }
+        newTodo = null;
     }
 
     async Task MarkCompleted(ChangeEventArgs e, Todo todo)
