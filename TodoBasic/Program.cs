@@ -12,6 +12,11 @@ namespace Todos
         {
             var app = WebApplication.Create(args);
 
+            var options = new FileServerOptions();
+            options.StaticFileOptions.ServeUnknownFileTypes = true;
+
+            app.UseFileServer(options);
+
             app.MapGet("/api/todos", GetTodos);
             app.MapGet("/api/todos/{id}", GetTodo);
             app.MapPost("/api/todos", CreateTodo);

@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using System.Net.Http
+@using Todos
+@inject HttpClient Http
+
+<section class="todoapp">
+    <header class="header">
+        <h1>todos</h1>
+        <input class="new-todo" placeholder="What needs to be done?" @bind="newTodo" autofocus="" @onkeyup="AddTodo">
+    </header>
+    <section class="main" style="display: block;">
+        <input class="toggle-all" id="toggle-all" type="checkbox">
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list">
+            @foreach (var todo in Todos)
+            {
+                <li class="@(todo.IsComplete ? "completed": "")">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" @onchange="@(e => MarkCompleted(e, todo))" checked="@todo.IsComplete">
+                        <label>@todo.Name</label>
+                        <button class="destroy" @onclick="@(() => DeleteTodo(todo))"></button>
+                    </div>
+                    <input class="edit" value="@todo.Name">
+                </li>
+            }
+        </ul>
+    </section>
+</section>
+
+@code {
+    string newTodo;
+
+    public List<Todo> Todos { get; set; } = new List<Todo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
+    }
+
+    async Task AddTodo(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await Http.PostJsonAsync("/api/todos", new Todo { Name = newTodo });
+
+            Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
+
+            newTodo = null;
+        }
+    }
+
+    async Task MarkCompleted(ChangeEventArgs e, Todo todo)
+    {
+        todo.IsComplete = (bool)e.Value;
+
+        await Http.PostJsonAsync($"/api/todos/{todo.Id}", todo);
+    }
+
+    async Task DeleteTodo(Todo todo)
+    {
+        await Http.DeleteAsync($"/api/todos/{todo.Id}");
+
+        Todos = await Http.GetJsonAsync<List<Todo>>("/api/todos");
+    }
+}
