@@ -18,7 +18,7 @@
             {
                 <li class="@(todo.IsComplete ? "completed": "")">
                     <div class="view">
-                        <input class="toggle" type="checkbox" @onchange="@(e => MarkCompleted(e, todo))" checked="@todo.IsComplete">
+                        <input class="toggle" type="checkbox" @onchange="@(e => MarkCompleted((bool)e.Value, todo))" checked="@todo.IsComplete">
                         <label>@todo.Name</label>
                         <button class="destroy" @onclick="@(() => DeleteTodo(todo))"></button>
                     </div>
@@ -48,9 +48,9 @@
         newTodo = null;
     }
 
-    async Task MarkCompleted(ChangeEventArgs e, Todo todo)
+    async Task MarkCompleted(bool isComplete, Todo todo)
     {
-        todo.IsComplete = (bool)e.Value;
+        todo.IsComplete = isComplete;
 
         await Http.PostJsonAsync($"/api/todos/{todo.Id}", todo);
     }
