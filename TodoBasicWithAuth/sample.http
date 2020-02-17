@@ -16,18 +16,6 @@ Content-Type: application/json
 
 ###
 
-// Create admin user
-POST http://localhost:5000/api/auth
-Content-Type: application/json
-
-{
-    "username" : "admin",
-    "password" : "Pass123456!",
-    "isAdmin"  : true
-}
-
-###
-
 // Authenticate as regular user
 # @name LoginRegularUser
 POST http://localhost:5000/api/auth/token

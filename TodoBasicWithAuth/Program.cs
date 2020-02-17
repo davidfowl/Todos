@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +31,12 @@ namespace Todos
                 .AddJwtBearer(options => options.TokenValidationParameters = jwtSettings.TokenValidationParameters);
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetService<UserManager<TodoUser>>();
+                await userManager.CreateAsync(new TodoUser { UserName = "admin", IsAdmin = true }, "Pass123456!" );
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
