@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class SwaggerExtension
+    public static class SwaggerExtensions
     {
         public static IServiceCollection AddSwaggerGenCommon(
             this IServiceCollection services,

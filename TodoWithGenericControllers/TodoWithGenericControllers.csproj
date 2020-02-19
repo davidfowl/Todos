@@ -9,9 +9,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Include="..\Shared\Configuration\GenericApiConfiguration.cs" Link="Shared\Configuration\GenericApiConfiguration.cs" />
+    <Compile Include="..\Shared\Configuration\GenericApiConfigurationExtensions.cs" Link="Shared\Configuration\GenericApiConfigurationExtensions.cs" />
 	  <Compile Include="..\Shared\Configuration\GenericApiControllerConfiguration.cs" Link="Shared\Configuration\GenericApiControllerConfiguration.cs" />
 	  <Compile Include="..\Shared\Configuration\GenericApiEfCoreConfiguration.cs" Link="Shared\Configuration\GenericApiEfCoreConfiguration.cs" />
-	  <Compile Include="..\Shared\Configuration\GenericApiExtensionConfiguration.cs" Link="Shared\Configuration\GenericApiExtensionConfiguration.cs" />
 	  <Compile Include="..\Shared\Configuration\GenericApiTypeControllerConfiguration.cs" Link="Shared\Configuration\GenericApiTypeControllerConfiguration.cs" />
 	  <Compile Include="..\Shared\GenericApi\GenericApiController.cs" Link="Shared\GenericApi\GenericApiController.cs" />
 	  <Compile Include="..\Shared\GenericApi\GenericApiFeature.cs" Link="Shared\GenericApi\GenericApiFeature.cs" />
@@ -21,25 +21,11 @@
 	  <Compile Include="..\Shared\Storage\IStorage.cs" Link="Shared\Storage\IStorage.cs" />
 	  <Compile Include="..\Shared\Storage\MemoryStorage.cs" Link="Shared\Storage\MemoryStorage.cs" />
 	  <Compile Include="..\Shared\Storage\StorageBase.cs" Link="Shared\Storage\StorageBase.cs" />
-	  <Compile Include="..\Shared\Swagger\SwaggerExtension.cs" Link="Shared\Swagger\SwaggerExtension.cs" />
+	  <Compile Include="..\Shared\Swagger\SwaggerExtensions.cs" Link="Shared\Swagger\SwaggerExtensions.cs" />
 	</ItemGroup>
 	<ItemGroup Label="Project Packages">
 		<PackageReference Include="FeatherHttp" Version="0.1.58-alpha.g44fef05de5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
-	</ItemGroup>
-	<ItemGroup Label="CodeAnalysis">
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.8">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 	</ItemGroup>
 </Project>

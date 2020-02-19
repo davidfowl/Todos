@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class GenericApiExtensionConfiguration
+    public static class GenericApiConfigurationExtensions
     {
         private const string EfCoreDbSetConfig = "EfCoreDbSet";
         private const string GenericApiConfig = "GenericApi";
@@ -52,18 +52,19 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(typeController));
             }
 
+            var sectionController = $"{GenericApiConfig}:Controllers:{controller.Namespace}.{controller.Name}:Types";
             foreach (var section in configuration
-                .GetSection($"{GenericApiConfig}:Controllers:{controller.FullName}:Types")
+                .GetSection(sectionController)
                 .GetChildren())
             {
-                var typeControllerAssemblyQualifiedName = configuration.GetSection($"{GenericApiConfig}:Controllers:{controller.FullName}:Types:{section.Key}:Type").Value;
+                var typeControllerAssemblyQualifiedName = configuration.GetSection($"{sectionController}:{section.Key}:Type").Value;
 
                 if (!typeControllerAssemblyQualifiedName.Equals(typeController.AssemblyQualifiedName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     continue;
                 }
 
-                return configuration.GetSection($"{GenericApiConfig}:Controllers:{controller.FullName}:Types:{section.Key}:Exclude").Value.Split(',');
+                return configuration.GetSection($"{sectionController}:{section.Key}:Exclude").Value.Split(',');
             }
 
             return Array.Empty<string>();

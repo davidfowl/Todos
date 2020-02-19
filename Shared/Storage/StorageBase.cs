@@ -84,7 +84,7 @@ namespace Microsoft.AspNetCore.Builder
 
         protected TK CopyProperties(TK currentData, TK updateData, string[] excludeProperty)
         {
-            if (excludeProperty == null)
+            if (excludeProperty.Length == 0)
             {
                 excludeProperty = new[] { KeyMap };
             }
