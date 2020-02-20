@@ -1,31 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<PropertyGroup Condition=" $(Nullable) != 'enable' ">
-		<NoWarn>$(NoWarn);CS8632</NoWarn>
-	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Include="..\Shared\Configuration\GenericApiConfiguration.cs" Link="Shared\Configuration\GenericApiConfiguration.cs" />
-    <Compile Include="..\Shared\Configuration\GenericApiConfigurationExtensions.cs" Link="Shared\Configuration\GenericApiConfigurationExtensions.cs" />
-	  <Compile Include="..\Shared\Configuration\GenericApiControllerConfiguration.cs" Link="Shared\Configuration\GenericApiControllerConfiguration.cs" />
-	  <Compile Include="..\Shared\Configuration\GenericApiEfCoreConfiguration.cs" Link="Shared\Configuration\GenericApiEfCoreConfiguration.cs" />
-	  <Compile Include="..\Shared\Configuration\GenericApiTypeControllerConfiguration.cs" Link="Shared\Configuration\GenericApiTypeControllerConfiguration.cs" />
-	  <Compile Include="..\Shared\GenericApi\GenericApiController.cs" Link="Shared\GenericApi\GenericApiController.cs" />
-	  <Compile Include="..\Shared\GenericApi\GenericApiFeature.cs" Link="Shared\GenericApi\GenericApiFeature.cs" />
-	  <Compile Include="..\Shared\GenericApi\GenericApiNameConvention.cs" Link="Shared\GenericApi\GenericApiNameConvention.cs" />
-	  <Compile Include="..\Shared\Storage\EfCoreStorage.cs" Link="Shared\Storage\EfCoreStorage.cs" />
-	  <Compile Include="..\Shared\Storage\EfCoreStorageDbContext.cs" Link="Shared\Storage\EfCoreStorageDbContext.cs" />
-	  <Compile Include="..\Shared\Storage\IStorage.cs" Link="Shared\Storage\IStorage.cs" />
-	  <Compile Include="..\Shared\Storage\MemoryStorage.cs" Link="Shared\Storage\MemoryStorage.cs" />
-	  <Compile Include="..\Shared\Storage\StorageBase.cs" Link="Shared\Storage\StorageBase.cs" />
-	  <Compile Include="..\Shared\Swagger\SwaggerExtensions.cs" Link="Shared\Swagger\SwaggerExtensions.cs" />
-	</ItemGroup>
 	<ItemGroup Label="Project Packages">
+		<PackageReference Include="DavidFowl.Todos" Version="2020.1230.2068" />
 		<PackageReference Include="FeatherHttp" Version="0.1.58-alpha.g44fef05de5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
 	</ItemGroup>
 </Project>
