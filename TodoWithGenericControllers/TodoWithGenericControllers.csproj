@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-	</PropertyGroup>
-	<ItemGroup Label="Project Packages">
-		<PackageReference Include="DavidFowl.Todos" Version="2020.1230.2068" />
-		<PackageReference Include="FeatherHttp" Version="0.1.58-alpha.g44fef05de5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-	</ItemGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DavidFowl.Todos" Version="2020.1230.2068" />
+    <PackageReference Include="FeatherHttp" Version="0.1.58-alpha.g44fef05de5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+  </ItemGroup>
 </Project>
