@@ -33,7 +33,7 @@ async Task GetTodo(HttpContext context)
 
     using var db = new TodoDbContext();
     var todo = await db.Todos.FindAsync(id);
-    if (todo == null)
+    if (todo is null)
     {
         context.Response.StatusCode = 404;
         return;
@@ -64,7 +64,7 @@ async Task UpdateCompleted(HttpContext context)
     using var db = new TodoDbContext();
     var todo = await db.Todos.FindAsync(id);
 
-    if (todo == null)
+    if (todo is null)
     {
         context.Response.StatusCode = 404;
         return;
@@ -88,7 +88,7 @@ async Task DeleteTodo(HttpContext context)
 
     using var db = new TodoDbContext();
     var todo = await db.Todos.FindAsync(id);
-    if (todo == null)
+    if (todo is null)
     {
         context.Response.StatusCode = 404;
         return;
