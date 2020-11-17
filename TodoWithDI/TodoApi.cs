@@ -21,7 +21,7 @@ namespace Todos
         {
             var todos = await db.Todos.ToListAsync();
 
-            await context.Response.WriteJsonAsync(todos, _options);
+            await context.Response.WriteAsJsonAsync(todos, _options);
         }
 
         public async Task GetAsync(TodoDbContext db, HttpContext context)
@@ -39,12 +39,12 @@ namespace Todos
                 return;
             }
 
-            await context.Response.WriteJsonAsync(todo, _options);
+            await context.Response.WriteAsJsonAsync(todo, _options);
         }
 
         public async Task PostAsync(TodoDbContext db, HttpContext context)
         {
-            var todo = await context.Request.ReadJsonAsync<Todo>(_options);
+            var todo = await context.Request.ReadFromJsonAsync<Todo>(_options);
 
             await db.Todos.AddAsync(todo);
             await db.SaveChangesAsync();
