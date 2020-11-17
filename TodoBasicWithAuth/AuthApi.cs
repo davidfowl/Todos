@@ -55,11 +55,11 @@ namespace Todos
             }
 
             var claims = new List<Claim>();
-
+            claims.Add(new Claim("can_view", "true"));
+            
             if (user.IsAdmin)
             {
                 claims.Add(new Claim("can_delete", "true"));
-                claims.Add(new Claim("can_view", "true"));
             }
 
             var key = new SymmetricSecurityKey(_jwtSettings.Key);
