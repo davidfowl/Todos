@@ -1,32 +1,42 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5fZGVsZXRlIjoidHJ1ZSIsImNhbl92aWV3IjoidHJ1ZSIsImV4cCI6MTU4MTU2NTU2MiwiaXNzIjoiZGVmYXVsdGlzc3VlciIsImF1ZCI6ImRlZmF1bHRhdWRpZW5jZSJ9.XJyk0vIcuy1x4Kdk2O6N9I3Ibg3Qs4dOlFiiQOle2pk
 @todo_id = 1
 ###
 
 // Needs https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-// Get all todos (no authentication)
-GET http://localhost:5000/api/todos
-
 
 ###
 
-// Authenticate as Admin
-POST http://localhost:5000/api/auth/token
+//Create regular user
+POST http://localhost:5000/api/auth
 Content-Type: application/json
 
 {
-    "username" : "admin",
-    "password" : "123456"
+    "username" : "user",
+    "password" : "Hunter2!"
 }
 
 ###
 
 // Authenticate as regular user
+# @name LoginRegularUser
 POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
     "username" : "user",
-    "password" : "hunter2"
+    "password" : "Hunter2!"
+}
+
+@token = {{LoginRegularUser.response.body.token}}
+###
+
+// New Todo
+POST http://localhost:5000/api/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "Name" : "Write unit tests.",
+    "IsComplete" : false
 }
 
 ###
@@ -43,21 +53,23 @@ Authorization: Bearer {{token}}
 GET http://localhost:5000/api/todos/{{todo_id}}
 Authorization: Bearer {{token}}
 
-
 ###
 
-// New Todo
-POST http://localhost:5000/api/todos
-Authorization: Bearer {{token}}
+// Authenticate as an admin user
+# @name LoginAdminUser
+POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "Name" : "Write unit tests.",
-    "IsComplete" : false
+    "username" : "admin",
+    "password" : "Pass123456!"
 }
 
 ###
 
-// Delete Todo
+// Delete Todo. must be authenticated as admim
+
+@admintoken = {{LoginAdminUser.response.body.token}}
+
 DELETE http://localhost:5000/api/todos/{{todo_id}}
-Authorization: Bearer {{token}}
+Authorization: Bearer {{admintoken}}
